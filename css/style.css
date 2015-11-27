@@ -25,6 +25,7 @@ body {
     background: green;
     width: 728px;
     margin: auto;
+    top: 220px;
 }
 
 #board {
@@ -68,6 +69,20 @@ body {
     background: url("../img/token-black.png") no-repeat center;
 }
 
+.container {
+    background: white;
+    width: 728px;
+    margin: auto;
+}
+
+#container-black {
+    top: 0;
+}
+
+#container-white {
+    top: 0;
+}
+
 #black-start {
     left: 0;
 }
@@ -85,8 +100,6 @@ body {
 }
 
 .tokens-container {
-    position: absolute;
-    bottom: 0;
     background: gray;
 }
 
@@ -134,9 +147,16 @@ body {
     right: 16px;
 }
 
+.selection {
+    background-color: rgb(80, 80, 80);
+    background-color: rgba(80, 80, 80, 0.5);
+}
+
 .rosetta {
 }
 
-.selection {
-    background-color: #505050;
+.rosetta.selection {
+    background-color: rgb(200, 80, 80);
+    background-color: rgba(200, 80, 80, 0.5);
 }
+
