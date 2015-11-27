@@ -10,6 +10,7 @@ $(function() {
     //vars
     var P = 'white';    //current player
     var ROLL = 0;       //current roll
+    var ROLL_LOCK = false;
 
     var Player = function(color) {
         var me = this;
@@ -33,7 +34,7 @@ $(function() {
     
     Player.prototype.listen = function() {
         var me = this;
-        var canmove = null;
+        var canmove = false;
         var opponentclass = 'token-' + this.opponent;
 
         $map.on('mouseover', '.' + me.tokenclass + ':not(.end)', function() {
@@ -85,20 +86,25 @@ $(function() {
     P2.listen();
     
     $dice_space.on('click', function() {
-        if ($(this).hasClass('roll')) {
-            $(this).removeClass('roll');
-            ROLL = 0;
-            for (var i=0; i < $dies.length; i++) {
-                var die = roll();
-                ROLL += die;
-                $($dies[i]).addClass('die-' + die);
+        if (!ROLL_LOCK) {
+            if ($(this).hasClass('roll')) {
+                $(this).removeClass('roll');
+                ROLL = 0;
+                for (var i=0; i < $dies.length; i++) {
+                    var die = roll();
+                    ROLL += die;
+                    $($dies[i]).addClass('die-' + die);
+                };
             };
-        };
+            
+            ROLL_LOCK = true;
 
-        if (ROLL == 0 || !canMove()) {
-            $(this).delay(2000).queue(function(){
-                endTurn(); $(this).dequeue();
-            });
+            if (ROLL == 0 || !canMove()) {
+                $(this).delay(2000).queue(function(){
+                    endTurn();
+                    $(this).dequeue();
+                });
+            };
         };
     });
     
@@ -120,6 +126,7 @@ $(function() {
 
     function prepareRoll() {
         ROLL = 0;
+        ROLL_LOCK = false;
         $dice_space.addClass('roll');
         for (var i=0; i < $dies.length; i++) {
             $($dies[i]).removeClass('die-0 die-1');
@@ -145,12 +152,13 @@ $(function() {
     function canMove() {
         var tokenclass = PLAYERS[P].tokenclass;
         var active_pieces = $('.' + tokenclass + ':not(.end)');
-        for (var i=0; i < active_pieces; i++) {
-            if (!canMoveFrom(PLAYERS[P], active_pieces[i])) {
-                return false;
+        
+        for (var i=0; i < active_pieces.length; i++) {
+            if (canMoveFrom(PLAYERS[P], active_pieces[i])) {
+                return true;
             };
         };
-        return true;
+        return false;
     };
 
     function canMoveFrom(player, current) {
@@ -159,19 +167,22 @@ $(function() {
         var tokenclass = player.tokenclass;
         var opponentclass = PLAYERS[player.opponent].tokenclass;
 
-        var canend = new_index == player.path.length;
-        if (canend) {
+        canmove = false;
+        if (new_index === player.path.length) {
             canmove = player.$end_container.find(
                 '.container-field:not(.' + tokenclass +  '):first');
         } else {
             canmove = player.path[new_index];
+            if (canmove === undefined) {
+                canmove = false;
+            };
         };
 
         if ($(canmove).hasClass(tokenclass)) {
-            canmove = null;
+            canmove = false;
         } else if ($(canmove).hasClass('rosetta') &&
                     $(canmove).hasClass(opponentclass)) {
-            canmove = null;
+            canmove = false;
         };
         return canmove;
     };
