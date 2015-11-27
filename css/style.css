@@ -1,0 +1,142 @@
+body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0 0;
+    min-width: 728px;
+    min-height: 600px;
+    background: #101010;
+}
+
+#wrapper {
+    background: #303030;
+    width: 728px;
+    min-width: 728px;
+    height: 100%;
+    margin: auto;
+    overflow: hidden;
+}
+
+#game-container {
+}
+
+#board-roll {
+    position: absolute;
+    background: green;
+    width: 728px;
+    margin: auto;
+}
+
+#board {
+    float: left;
+    width: 656px;
+    height: 256px;
+    background: url("../img/board.png") no-repeat;
+}
+
+#dice-space {
+    float: left;
+}
+
+#dice-space.roll {
+    background: red;
+}
+
+.die {
+    height: 56px;
+    width: 48px;
+    margin: 8px;
+}
+
+.empty {
+    background: none;
+}
+
+.die-0 {
+    background: url("../img/die-0.png") no-repeat;
+}
+
+.die-1 {
+    background: url("../img/die-1.png") no-repeat;
+}
+
+.token-white {
+    background: url("../img/token-white.png") no-repeat center;
+}
+
+.token-black {
+    background: url("../img/token-black.png") no-repeat center;
+}
+
+#black-start {
+    left: 0;
+}
+
+#white-start {
+    right: 0;
+}
+
+#black-end {
+    left: 200px;
+}
+
+#white-end {
+    right: 200px;
+}
+
+.tokens-container {
+    position: absolute;
+    bottom: 0;
+    background: gray;
+}
+
+.container-field {
+    float: left;
+    height: 48px;
+    width: 48px;
+    margin: 8px;
+}
+
+#path-main {
+    position: absolute;
+    top: 88px;
+    left: 72px;
+}
+
+.path-field {
+    float: left;
+    height: 64px;
+    width: 64px;
+    margin: 8px;
+}
+
+#path-black-start {
+    position: absolute;
+    top: 8px;
+    left: 72px;
+}
+
+#path-black-end {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+#path-white-start {
+    position: absolute;
+    bottom: 16px;
+    left: 72px;
+}
+
+#path-white-end {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+.rosetta {
+}
+
+.selection {
+    background-color: #505050;
+}

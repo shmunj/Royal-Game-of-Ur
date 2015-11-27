@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Royal Game of Ur</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="wrapper">
+
+    <div id="game-container">
+
+        <div id="black-start" class="tokens-container">
+            <div class="container-row">
+                <div class="container-field token-black"></div>
+                <div class="container-field token-black"></div>
+                <div class="container-field token-black"></div>
+            </div>
+            <div class="container-row">
+                <div class="container-field token-black"></div>
+                <div class="container-field token-black"></div>
+                <div class="container-field token-black"></div>
+            </div>
+        </div>
+
+        <div id="black-end" class="tokens-container">
+            <div class="container-row">
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+            </div>
+            <div class="container-row">
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+            </div>
+        </div>
+        
+        <div id="board-roll">
+            <div id="dice-space" class="roll">
+                <div class="die empty"></div>
+                <div class="die empty"></div>
+                <div class="die empty"></div>
+                <div class="die empty"></div>
+            </div>
+
+            <div id="board">
+                <div id="path-black-start">
+                    <div class="path-field rosetta"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                </div>
+
+                <div id="path-black-end">
+                    <div class="path-field rosetta"></div>
+                    <div class="path-field"></div>
+                </div>
+
+                <div id="path-main">
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field rosetta"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                </div>
+                
+                <div id="path-white-start">
+                    <div class="path-field rosetta"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                    <div class="path-field"></div>
+                </div>
+
+                <div id="path-white-end">
+                    <div class="path-field rosetta"></div>
+                    <div class="path-field"></div>
+                </div>
+            </div>
+        </div> <!-- board-roll -->
+
+        <div id="white-start" class="tokens-container">
+            <div class="container-row">
+                <div class="container-field token-white"></div>
+                <div class="container-field token-white"></div>
+                <div class="container-field token-white"></div>
+            </div>
+            <div class="container-row">
+                <div class="container-field token-white"></div>
+                <div class="container-field token-white"></div>
+                <div class="container-field token-white"></div>
+            </div>
+        </div>
+
+        <div id="white-end" class="tokens-container">
+            <div class="container-row">
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+            </div>
+            <div class="container-row">
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+                <div class="container-field end"></div>
+            </div>
+        </div>
+    
+    </div> <!-- game container-->
+
+</div> <!-- wrapper -->
+<script src="js/jquery.js"></script>
+<script src="js/ur.js"></script>
+</body>
+</html>
