@@ -1,17 +1,25 @@
 $(function() {
     
+    //vars
+    var P = 'white';    //current player
+    var ROLL = 0;       //current roll
+    var ROLL_LOCK = false;
+
     //$ objects
     $map = $('#game-container');
     $board = $('#board');
     $dice_space = $('#dice-space');
     $dies = $($dice_space).children('.die');
     $path_main = $('#path-main');
-
-    //vars
-    var P = 'white';    //current player
-    var ROLL = 0;       //current roll
-    var ROLL_LOCK = false;
-
+    $messages = $('#messages');
+    INFO = {
+        turn: $($messages.find('#turninfo')),
+        roll: $($messages.find('#rollinfo')),
+    };
+    
+    INFO['turn'].html(P.toUpperCase() + ' PLAYS');  ///////start positions in separate function
+    INFO['roll'].html('ROLL!');
+    
     var Player = function(color) {
         var me = this;
         this.color = color;
@@ -96,7 +104,7 @@ $(function() {
                     $($dies[i]).addClass('die-' + die);
                 };
             };
-            
+
             ROLL_LOCK = true;
 
             if (ROLL == 0 || !canMove()) {
@@ -105,6 +113,8 @@ $(function() {
                     $(this).dequeue();
                 });
             };
+        
+            INFO['roll'].html('ROLL: ' + ROLL);
         };
     });
     
@@ -122,6 +132,7 @@ $(function() {
     function endTurn() {
         prepareRoll();
         P == 'white' ? P = 'black' : P = 'white';
+        INFO['turn'].html(P.toUpperCase() + ' PLAYS');
     };
 
     function prepareRoll() {
@@ -131,6 +142,7 @@ $(function() {
         for (var i=0; i < $dies.length; i++) {
             $($dies[i]).removeClass('die-0 die-1');
         };
+        INFO['roll'].html('ROLL!');
     };
 
     function eat(field, color) {
@@ -146,7 +158,17 @@ $(function() {
     };
 
     function endGame(winner) {
-        alert(winner.color + ' player wins!');
+        INFO['turn'].html(winner.toUpperCase() + ' WINS');
+        INFO['roll'].html('');
+        //  options to reset
+
+    };
+
+    function startGame() {
+        //reset variables
+        //reset fields
+        //reset players
+        //start listening
     };
 
     function canMove() {

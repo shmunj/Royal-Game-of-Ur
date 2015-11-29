@@ -20,33 +20,54 @@ body {
 #game-container {
 }
 
+#messages {
+    position: relative;
+    background: brown;
+    width: 728px;
+    height: 100px;
+    margin: auto;
+    top:0;
+    color: white;
+    text-align: center;
+}
+
+.container {
+    position: relative;
+    height: 128px;
+    padding: 8px;
+    top: 0;
+    overflow: auto;
+}
+
 #board-roll {
-    position: absolute;
-    background: green;
+    position: relative;
     width: 728px;
     margin: auto;
-    top: 220px;
+    top: 0;
+    overflow: auto;
 }
 
 #board {
-    float: left;
+    float: right;
     width: 656px;
     height: 256px;
     background: url("../img/board.png") no-repeat;
+    margin-right: 8px;
 }
 
 #dice-space {
     float: left;
+    margin-left: 8px;
 }
 
 #dice-space.roll {
-    background: red;
+    background: url("../img/roll.png") no-repeat top;
 }
 
 .die {
     height: 56px;
     width: 48px;
-    margin: 8px;
+    margin: 8px 0 0;
 }
 
 .empty {
@@ -69,38 +90,14 @@ body {
     background: url("../img/token-black.png") no-repeat center;
 }
 
-.container {
-    background: white;
-    width: 728px;
-    margin: auto;
-}
-
-#container-black {
-    top: 0;
-}
-
-#container-white {
-    top: 0;
-}
-
-#black-start {
-    left: 0;
-}
-
-#white-start {
-    right: 0;
-}
-
-#black-end {
-    left: 200px;
-}
-
-#white-end {
-    right: 200px;
+.container-end {
+    float: right !important;
 }
 
 .tokens-container {
+    float: left;
     background: gray;
+    overflow: auto;
 }
 
 .container-field {
@@ -137,13 +134,13 @@ body {
 
 #path-white-start {
     position: absolute;
-    bottom: 16px;
+    bottom: 8px;
     left: 72px;
 }
 
 #path-white-end {
     position: absolute;
-    bottom: 16px;
+    bottom: 8px;
     right: 16px;
 }
 
