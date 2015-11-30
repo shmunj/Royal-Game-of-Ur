@@ -1,26 +1,57 @@
 $(function() {
     
-    //vars
-    var P = 'white';    //current player
-    var ROLL = 0;       //current roll
-    var ROLL_LOCK = false;
+    function startGame() {
+        clearBoard();
+        
+        P = 'white';    //current player
+        prepareRoll();
 
-    //$ objects
-    $map = $('#game-container');
-    $board = $('#board');
-    $dice_space = $('#dice-space');
-    $dies = $($dice_space).children('.die');
-    $path_main = $('#path-main');
-    $messages = $('#messages');
-    INFO = {
-        turn: $($messages.find('#turninfo')),
-        roll: $($messages.find('#rollinfo')),
+        INFO['turn'].html(P.toUpperCase() + ' PLAYS');
+        INFO['roll'].html('ROLL!');
+        INFO['reset'].html('RESET');
+        INFO['reset'].addClass('small');
+
+        P1 = new Player('white');
+        P2 = new Player('black');
+        PLAYERS = {'white': P1, 'black': P2};
+
+        //events
+        P1.listen();
+        P2.listen();
+        
+        $dice_space.on('click', function() {
+            if (!ROLL_LOCK) {
+                if ($(this).hasClass('roll')) {
+                    $(this).removeClass('roll selection');
+                    ROLL = 0;
+                    for (var i=0; i < $dies.length; i++) {
+                        var die = roll();
+                        ROLL += die;
+                        $($dies[i]).addClass('die-' + die);
+                    };
+                };
+
+                ROLL_LOCK = true;
+
+                if (ROLL == 0 || !canMove()) {
+                    $(this).delay(2000).queue(function(){
+                        endTurn();
+                        $(this).dequeue();
+                    });
+                };
+            
+                INFO['roll'].html('ROLL: ' + ROLL);
+            };
+        });
+        
+        hoverSelect(INFO['reset'], 'selection');
+        INFO['reset'].on('click', function() { startGame(); });
+    
+        rulesListener();
+
     };
-    
-    INFO['turn'].html(P.toUpperCase() + ' PLAYS');  ///////start positions in separate function
-    INFO['roll'].html('ROLL!');
-    
-    var Player = function(color) {
+
+    Player = function(color) {
         var me = this;
         this.color = color;
         this.opponent = null;
@@ -32,12 +63,7 @@ $(function() {
         this.$end_container = $('div#game-container div#' + color + '-end');
         
         this.path = [];
-        var tmp_path = $('#path-' + color + '-start').children('div.path-field').toArray();
-        addPath(tmp_path.reverse(), me);
-        tmp_path = $path_main.children('div.path-field').toArray();
-        addPath(tmp_path, me);
-        tmp_path = $('#path-' + color + '-end').children('div.path-field').toArray();
-        addPath(tmp_path.reverse(), me);
+        getPath(this.color, this.path);
     };
     
     Player.prototype.listen = function() {
@@ -85,50 +111,26 @@ $(function() {
         });
     };
 
-    var P1 = new Player('white');
-    var P2 = new Player('black');
-    var PLAYERS = {'white': P1, 'black': P2};
-
-    //events
-    P1.listen();
-    P2.listen();
-    
-    $dice_space.on('click', function() {
-        if (!ROLL_LOCK) {
-            if ($(this).hasClass('roll')) {
-                $(this).removeClass('roll');
-                ROLL = 0;
-                for (var i=0; i < $dies.length; i++) {
-                    var die = roll();
-                    ROLL += die;
-                    $($dies[i]).addClass('die-' + die);
-                };
-            };
-
-            ROLL_LOCK = true;
-
-            if (ROLL == 0 || !canMove()) {
-                $(this).delay(2000).queue(function(){
-                    endTurn();
-                    $(this).dequeue();
-                });
-            };
-        
-            INFO['roll'].html('ROLL: ' + ROLL);
-        };
-    });
-    
     //functions
     function roll() {
         return Math.floor(Math.random() * 2);
     };
 
-    function addPath(tmp_path, me) {
+    function addPath(tmp_path, path) {
         $.each(tmp_path, function (i, field) {
-            me.path.push(field);
+            path.push(field);
         });
     };
 
+    function getPath(color, path) {
+        var tmp_path = $('#path-' + color + '-start').children('div.path-field').toArray();
+        addPath(tmp_path.reverse(), path);
+        tmp_path = $path_main.children('div.path-field').toArray();
+        addPath(tmp_path, path);
+        tmp_path = $('#path-' + color + '-end').children('div.path-field').toArray();
+        addPath(tmp_path.reverse(), path);
+    };
+    
     function endTurn() {
         prepareRoll();
         P == 'white' ? P = 'black' : P = 'white';
@@ -138,7 +140,7 @@ $(function() {
     function prepareRoll() {
         ROLL = 0;
         ROLL_LOCK = false;
-        $dice_space.addClass('roll');
+        $dice_space.addClass('roll selection');
         for (var i=0; i < $dies.length; i++) {
             $($dies[i]).removeClass('die-0 die-1');
         };
@@ -158,17 +160,9 @@ $(function() {
     };
 
     function endGame(winner) {
-        INFO['turn'].html(winner.toUpperCase() + ' WINS');
+        INFO['turn'].html(winner.color.toUpperCase() + ' WINS');
         INFO['roll'].html('');
-        //  options to reset
-
-    };
-
-    function startGame() {
-        //reset variables
-        //reset fields
-        //reset players
-        //start listening
+        INFO['reset'].removeClass('small');
     };
 
     function canMove() {
@@ -208,5 +202,87 @@ $(function() {
         };
         return canmove;
     };
+
+    function clearBoard() {
+        $('.token-white, .token-black').removeClass('token-white token-black');
+        $('div#black-start .container-field').addClass('token-black');
+        $('div#white-start .container-field').addClass('token-white');
+    };
+    
+    function hoverSelect($selector, hoverclass) {
+        $selector.on('mouseover', function() {
+            $(this).addClass(hoverclass);
+        });
+        $selector.on('mouseout', function() {
+            $(this).removeClass(hoverclass);
+        });
+    };
+
+    function hoverAnother($selector, $another, hoverclass) {
+        $selector.on('mouseover', function() {
+            $another.toggleClass(hoverclass);
+        });
+        $selector.on('mouseout', function() {
+            $another.toggleClass(hoverclass);
+        });
+    };
+
+    function rulesListener() {
+        for (r in RULES) {
+            hoverSelect(RULES[r][0], 'selection');
+            if (r == 'pathblack' || r == 'pathwhite') {
+                var path = showPath(RULES[r][1])
+                hoverAnother(RULES[r][0], path, 'selection');
+                hoverPathSigns(RULES[r][0], path);
+            }
+            else if (r == 'rolling') {
+                hoverAnother(RULES[r][0], RULES[r][1], 'roll');
+            } else {
+                hoverAnother(RULES[r][0], RULES[r][1], 'selection');
+            };
+        };
+    };
+
+    function showPath(color, hoverclass) {
+        var path = [];
+        getPath(color, path);
+        return $(path);
+    };
+
+    function hoverPathSigns($selector, path) {
+        $.each($(path).filter('[data-arrow]'), function() {
+            var arrow = $(this).attr('data-arrow');
+            if (arrow == 'both') {
+                ($selector.attr('id') == 'tut-pathwhite') ? arrow = 'down' : arrow = 'up';
+            };
+            hoverAnother($selector, $(this), 'arrow ' + arrow);
+        });
+    };
+
+    //$ objects
+    $map = $('#game-container');
+    $board = $('#board');
+    $dice_space = $('#dice-space');
+    $dies = $($dice_space).children('.die');
+    $path_main = $('#path-main');
+    $messages = $('#messages');
+    INFO = {
+        turn: $($messages.find('#turninfo')),
+        roll: $($messages.find('#rollinfo')),
+        reset: $($messages.find('#resetinfo')),
+    };
+    $tutinfo = $('div#info.rules');
+    RULES = {
+        rolling: [  $tutinfo.find('span#tut-rolling'), $dice_space],
+        tokens: [$tutinfo.find('span#tut-tokens'), $('.token-black, .token-white')],
+        startpos: [$tutinfo.find('span#tut-startpos'), $('#black-start, #white-start')],
+        endpos: [$tutinfo.find('span#tut-endpos'), $('#black-end, #white-end')],
+        rosettas: [$tutinfo.find('span#tut-rosettas'), $('.rosetta')],
+        pathwhite: [$tutinfo.find('span#tut-pathwhite'), 'white'], 
+        pathblack: [$tutinfo.find('span#tut-pathblack'), 'black'],
+    };
+    
+    //game
+    startGame();
 
 });
