@@ -47,8 +47,6 @@ $(function() {
         hoverSelect(INFO['reset'], 'selection');
         INFO['reset'].on('click', function() { startGame(); });
     
-        rulesListener();
-
     };
 
     Player = function(color) {
@@ -283,7 +281,7 @@ $(function() {
         pathblack: [$tutinfo.find('span#tut-pathblack'), 'black'],
     };
     
-    //game
+    rulesListener();
     startGame();
 
 });
