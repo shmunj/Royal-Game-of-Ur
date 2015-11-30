@@ -163,6 +163,7 @@ $(function() {
         INFO['turn'].html(winner.color.toUpperCase() + ' WINS');
         INFO['roll'].html('');
         INFO['reset'].removeClass('small');
+        ROLL_LOCK = true;
     };
 
     function canMove() {
