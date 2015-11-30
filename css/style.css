@@ -4,12 +4,12 @@ body {
     width: 100%;
     margin: 0 0;
     min-width: 728px;
-    min-height: 600px;
+    min-height: 800px;
     background: #101010;
 }
 
 #wrapper {
-    background: #303030;
+    background: #586B6B;
     width: 728px;
     min-width: 728px;
     height: 100%;
@@ -20,15 +20,36 @@ body {
 #game-container {
 }
 
-#messages {
-    position: relative;
-    background: brown;
-    width: 728px;
+#info {
+    background: #303030;
     height: 100px;
-    margin: auto;
-    top:0;
+    margin: auto 8px;
     color: white;
     text-align: center;
+}
+
+#messages {
+    width: 400px;
+    height: 100%;
+    margin: 0 auto;
+    top: 0;
+}
+
+h6, h5, h4, h3, h2, h1 {
+}
+
+#info h6 span {
+    color: #FF5050;
+}
+
+#resetinfo {
+    width: 100px;
+    margin: 0 auto;
+    border: 1px solid white;
+}
+
+.small {
+    font-size: 10px;
 }
 
 .container {
@@ -96,7 +117,6 @@ body {
 
 .tokens-container {
     float: left;
-    background: gray;
     overflow: auto;
 }
 
@@ -147,6 +167,7 @@ body {
 .selection {
     background-color: rgb(80, 80, 80);
     background-color: rgba(80, 80, 80, 0.5);
+    cursor: pointer;
 }
 
 .rosetta {
@@ -155,5 +176,38 @@ body {
 .rosetta.selection {
     background-color: rgb(200, 80, 80);
     background-color: rgba(200, 80, 80, 0.5);
+}
+
+.arrow {
+    background: url("../img/arrow.png");
+    background-color: rgb(80, 80, 80);
+    background-color: rgba(80, 80, 80, 0.8);
+}
+
+.arrow.right {
+}
+
+.arrow.up {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+.arrow.down {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.arrow.left {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
