@@ -9,9 +9,12 @@
 
     <div id="game-container">
 
-        <div id="messages">
-            <h3 id="turninfo"></h3>
-            <p id="rollinfo"></p>
+        <div id="info">
+            <div id="messages">
+                <h3 id="turninfo"></h3>
+                <h4 id="rollinfo"></h4>
+                <h4 id="resetinfo"></h4>
+            </div>
         </div>
 
         <div id="container-black" class="container">
@@ -52,38 +55,38 @@
 
             <div id="board">
                 <div id="path-black-start">
-                    <div class="path-field rosetta"></div>
+                    <div class="path-field rosetta" data-arrow="down"></div>
                     <div class="path-field"></div>
                     <div class="path-field"></div>
-                    <div class="path-field"></div>
+                    <div class="path-field" data-arrow="left"></div>
                 </div>
 
                 <div id="path-black-end">
-                    <div class="path-field rosetta"></div>
-                    <div class="path-field"></div>
+                    <div class="path-field rosetta" data-arrow="up"></div>
+                    <div class="path-field" data-arrow="left"></div>
                 </div>
 
                 <div id="path-main">
-                    <div class="path-field"></div>
+                    <div class="path-field" data-arrow="right"></div>
                     <div class="path-field"></div>
                     <div class="path-field"></div>
                     <div class="path-field rosetta"></div>
                     <div class="path-field"></div>
                     <div class="path-field"></div>
                     <div class="path-field"></div>
-                    <div class="path-field"></div>
+                    <div class="path-field" data-arrow="both"></div>
                 </div>
                 
                 <div id="path-white-start">
-                    <div class="path-field rosetta"></div>
+                    <div class="path-field rosetta" data-arrow="up"></div>
                     <div class="path-field"></div>
                     <div class="path-field"></div>
-                    <div class="path-field"></div>
+                    <div class="path-field" data-arrow="left"></div>
                 </div>
 
                 <div id="path-white-end">
-                    <div class="path-field rosetta"></div>
-                    <div class="path-field"></div>
+                    <div class="path-field rosetta" data-arrow="down"></div>
+                    <div class="path-field" data-arrow="left"></div>
                 </div>
             </div>
         </div> <!-- board-roll -->
@@ -115,6 +118,11 @@
                 </div>
             </div>
        </div> <!-- container-white -->
+    
+        <div id="info" class="rules">
+            <h5>HOW TO PLAY:</h5>
+            <h6>Two players take turns <span id="tut-rolling">rolling</span> four four-sided dice, and then move their <span id="tut-tokens">tokens</span> from <span id="tut-startpos">start positions</span> to <span id="tut-endpos">end positions</span>. Players can eat the opponent's pieces and send them back to the start position. <span id="tut-rosettas">rosettas</span> are special fields which grant a re-roll and protect the player from being eaten while on them. Players have <span id="tut-pathwhite">different</span> horizontal <span id="tut-pathblack">paths</span> and the first to complete theirs with all pieces wins the game.</h6>
+        </div>
     
     </div> <!-- game container-->
 
